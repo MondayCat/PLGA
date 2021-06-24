@@ -1,4 +1,4 @@
-This code includes 2 experiments —— SPFL and PLGP, which are Synchronous Federated Learning and Asynchronous Federated Learning, we do personalization FL on both of them.
+This code includes 2 algorithms —— SPFL and PLGP, which are Synchronous Federated Learning and Asynchronous Federated Learning, we do personalization FL on both of them.
 
 # Environment
  - python 3.7
