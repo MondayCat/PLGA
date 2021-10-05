@@ -26,7 +26,7 @@ from client.client import Client, client_train_schedule, client_test_schedule,cl
 from dataset.org_dataset import load_org_dataset
 from dataset.dataset_v4 import dataset_federate_new as data_federate
 
-#  相关的日志
+#  
 import config.cifar10_config as config
 from logger.log_utils_v1 import  Logger
 
