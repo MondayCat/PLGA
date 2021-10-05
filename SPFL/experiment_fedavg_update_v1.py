@@ -1,7 +1,7 @@
 """
 remove pysyft framework
 new version:fed avg
-time:20201217
+time:
 """
 
 import time
@@ -30,7 +30,7 @@ from dataset.data_transform import get_dataset_transform_v1 as get_dataset_trans
 
 from model.model_factory import get_init_model
 
-#  相关的日志
+#  
 from arguments_v1 import ExperimentParaUpdate as ExpermentPara
 from logger.log_utils import Logger
 from aggregation_utils.aggregation_v1 import AggregationModule
@@ -138,7 +138,7 @@ def federate_test_v1(cur_client_list, cur_round):
 if __name__ == "__main__":
     import sys
 
-    savedStdout = sys.stdout  # 保存标准输出流
+    savedStdout = sys.stdout  # 
 
     import argparse
 
@@ -154,7 +154,7 @@ if __name__ == "__main__":
     parse.add_argument("--use_server", type=int, default=0)
     parse.add_argument("--local_fine_step", type=int, default=1)
     parse.add_argument("--re_stdout", type=int, default=0)
-    # 重定向输出
+    # 
     args = parse.parse_args()
     if args.re_stdout == 0:
         re_stdout = False
@@ -193,7 +193,7 @@ if __name__ == "__main__":
     if re_stdout:
         file_path = logger.run_log_file
         file = open(file_path, 'w+')
-        sys.stdout = file  # 标准输出重定向至文件
+        sys.stdout = file  # 
         # print("stra")
     print("start experment----> para is:", flush=True)
     print(arguments_str)
@@ -275,5 +275,5 @@ if __name__ == "__main__":
                                                                                            routine_time))
         sys.stdout.flush()
     if re_stdout:
-        sys.stdout = savedStdout  # 恢复标准输出流
+        sys.stdout = savedStdout  #
         file.close()
