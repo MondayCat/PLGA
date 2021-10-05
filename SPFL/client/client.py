@@ -1,5 +1,5 @@
 """
-time:20201216
+time
 """
 import os
 import copy
@@ -58,7 +58,7 @@ def client_train_schedule(model,dataloader,optimizer,cur_arguments,device):
             loss = F.nll_loss(output, target)
             loss.backward()
             current_optimizer.step()
-            if cur_arguments.local_two_update:    # MAML: 客户端上２次更新
+            if cur_arguments.local_two_update:    
                 current_optimizer.zero_grad()
                 output = current_model(data)
                 loss = F.nll_loss(output, target)
