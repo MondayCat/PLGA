@@ -1,7 +1,4 @@
 """
-多个模型权重融合的模块，
-第一个版本实现联邦平均算法
-time:20200927
 """
 import copy
 
@@ -10,7 +7,7 @@ import torch
 
 class AggregationModule:
     """
-    多个客户端权重融合的算法
+
     """
     def __init__(self,cur_arguments):
 
@@ -23,7 +20,7 @@ class AggregationModule:
 
     def get_aggregation_result(self,update_model_list):
         """
-        对客户端的模型进行聚合
+
         :param update_model_list:
         :return:
         """
