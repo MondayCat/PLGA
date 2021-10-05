@@ -1,7 +1,7 @@
 """
 remove pysyft framework
 new version:per_fedavg
-time:20201216
+time:
 """
 
 import time
