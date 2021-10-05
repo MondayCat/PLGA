@@ -27,7 +27,7 @@ from dataset.data_transform import get_dataset_transform
 
 from model.model_factory import get_init_model
 
-#  相关的日志
+#  
 from arguments_v1 import ExperimentPara as ExpermentPara
 from logger.log_utils import Logger
 from aggregation_utils.aggregation_v2 import AggregationModule
@@ -46,14 +46,14 @@ def federate_train_v1(client_list, cur_arguments: ExpermentPara, cur_round,
                       aggregation_module: AggregationModule=None,
                       compression_module = None):
     org_server_model = copy.deepcopy(client_list[0].model)
-    org_model_list = []  # 保存训练之前client的model
+    org_model_list = []  # 
     for cur_client in client_list:
         cur_client: Client
         copy_model = copy.deepcopy(cur_client.get_model())
         org_model_list.append(copy_model)
 
     update_model_list = []
-    for cur_client in client_list:  # 每次传一个client进行训练
+    for cur_client in client_list:  # 
         tmp_model = copy.deepcopy(cur_client.get_model())
         tmp_model.train()
         # tmp_optimizer = optim.SGD(tmp_model.parameters(), lr=1e-2, weight_decay=1e-4)
@@ -65,7 +65,7 @@ def federate_train_v1(client_list, cur_arguments: ExpermentPara, cur_round,
         tmp_dataloader = torch.utils.data.DataLoader(tmp_train_data, batch_size=cur_arguments.batch_size,
                                                      shuffle=True, num_workers=6, pin_memory=False)
         update_model = client_train_schedule(tmp_model, tmp_dataloader, tmp_optimizer, cur_arguments, device)
-        update_model_list.append(update_model)  # 将本地更新后的model保存
+        update_model_list.append(update_model)  # 
 
     for index,cur_client in enumerate(client_list):
         cur_client.set_model(update_model_list[index])
@@ -77,17 +77,17 @@ def federate_train_v1(client_list, cur_arguments: ExpermentPara, cur_round,
         current_model_local = copy.deepcopy(tmp_model)
         update_model_list_cp.append(current_model_local)
 
-    # 聚合模型
+    # 
     final_state_dict_list = aggregation_module.get_aggregation_result(update_model_list_cp,beta=cur_arguments.beta,org_server_model=org_server_model)
 
     if cur_arguments.use_server:
         print("update by server at rount {}".format(cur_round))
-        for model_index, tmp_model in enumerate(update_model_list):  # server聚合结果重新写入update_model_list
+        for model_index, tmp_model in enumerate(update_model_list):  # 
             tmp_model.load_state_dict(final_state_dict_list[model_index])
     else:
         pass
-    for update_model, cur_client in zip(update_model_list, client_list):  # update_model_list分发给client
-        cur_client.set_model(copy.deepcopy(update_model))  # client上为聚合后的model
+    for update_model, cur_client in zip(update_model_list, client_list):  # 
+        cur_client.set_model(copy.deepcopy(update_model))  # 
     return client_list
 
 
@@ -124,7 +124,7 @@ def federate_test_v1(cur_client_list, cur_round):
 
 if __name__ == "__main__":
     import sys
-    savedStdout = sys.stdout  # 保存标准输出流
+    savedStdout = sys.stdout  # 
     import argparse
 
     parse = argparse.ArgumentParser()
@@ -146,7 +146,7 @@ if __name__ == "__main__":
                         help="Average moving parameter for pFedMe, or Second learning rate of Per-FedAvg")
     parse.add_argument("--learning_rate", type=float, default=0.01, help="Local learning rate")
     parse.add_argument("--seed", type=int, default=50, help="random seed")
-    # 重定向输出
+    # 
     args = parse.parse_args()
     if args.re_stdout == 0:
         re_stdout = False
@@ -192,7 +192,7 @@ if __name__ == "__main__":
     if re_stdout:
         file_path = logger.run_log_file
         file = open(file_path, 'w+')
-        sys.stdout = file  # 标准输出重定向至文件
+        sys.stdout = file  # 
         # print("stra")
     print("start experment----> para is:", flush=True)
     print(arguments_str)
@@ -230,7 +230,7 @@ if __name__ == "__main__":
     logger.save_client_data_index(client2index_list)
     # logger.load_client_data_index()
 
-    model = get_init_model(cur_arguments)  # model带有参数
+    model = get_init_model(cur_arguments)  # 
 
     # create client
     client_list = []
@@ -250,13 +250,13 @@ if __name__ == "__main__":
         client_list.append(cur_client)
     model.to(device)
 
-    # 聚合方式
+    # 
     aggregation_module = AggregationModule(cur_arguments)
 
     for epoch in range(1, cur_arguments.communication_round + 1):
         print("------" * 11)
         start = time.time()
-        # return client_list:经过一次个性化以及一次server聚合的model
+        # return client_list:
         client_list = federate_train_v1(client_list, cur_arguments, epoch, aggregation_module=aggregation_module)
         end = time.time()
         train_time = end - start
@@ -280,5 +280,5 @@ if __name__ == "__main__":
                                                                                            routine_time))
         sys.stdout.flush()
     if re_stdout:
-        sys.stdout = savedStdout  # 恢复标准输出流
+        sys.stdout = savedStdout  # 
         file.close()
