@@ -1,7 +1,6 @@
 """
 add a weight matrix for proposed method v1
 t update schedule based on v2
-根据第一步的参数决定不同客户端的分布以及相关矩阵的计算
 copy from v4, use for model compress ,
 model para sended is grad parameters
 not original model parameters
@@ -24,8 +23,7 @@ device = torch.device("cuda" if use_cuda else "cpu")
 
 class AggregationModule:
     """
-    多个客户端权重融合的算法
-    第四个版本
+
     new update schedule base
     """
 
@@ -33,7 +31,7 @@ class AggregationModule:
 
         self.cur_arguments = cur_arguments
         self.cur_model_list = None
-        self.last_step_model_list = None  # 保存上次迭代模型的参数,字典类型
+        self.last_step_model_list = None  # 
 
         self.client_num = self.cur_arguments.client_num
         self.init_model = init_model
@@ -73,8 +71,8 @@ class AggregationModule:
 
     def update_weight_matrix(self, update_model_list):
         """
-        更新权重矩阵
-        :param update_model_list:最新更新的模型
+        
+        :param update_model_list:
         :return:
         """
         cur_state_dict_list = [copy.deepcopy(update_model_list[i].state_dict())
@@ -205,8 +203,7 @@ class AggregationModule:
 
     def aggregation_op(self, update_model_grad_list):
         """
-        根据权重参数对模型进行聚合
-        这里的权重相关参数访问base和head两种
+
         code is base on aggregation_v4 aggregation_v1 version
         freeze fc2 layer and update base layer
         difference from v4 is that this version is based on gard val
@@ -335,8 +332,7 @@ class AggregationModule:
 
     def aggregation_op_v1(self):
         """
-        根据权重参数对模型进行聚合
-        这里的权重相关参数访问base和head两种
+
         :param update_model_list:input model list
         :return:
         time:20201014
@@ -510,7 +506,6 @@ class AggregationModule:
 
     def get_aggregation_result(self, update_model_list, cur_loss_list=None):
         """
-        对客户端的模型进行聚合
         :param update_model_list:current local update model list
         :param cur_loss_list:cur local test loss
         :return:
@@ -520,7 +515,6 @@ class AggregationModule:
 
     def get_aggregation_result_v1(self, update_model_list, cur_loss_list=None):
         """
-        对客户端的模型进行聚合
         :param update_model_list:current local update model list
         :param cur_loss_list:cur local test loss
         :return:
@@ -530,7 +524,7 @@ class AggregationModule:
 
     def get_aggregation_result_mean(self):
         """
-        对客户端的模型进行聚合
+
         :param update_model_list:current local update model list
         :param cur_loss_list:cur local test loss
         :return:
@@ -546,7 +540,7 @@ if __name__ == "__main__":
     import config.cifar10_config as config
     import time
 
-    savedStdout = sys.stdout  # 保存标准输出流
+    savedStdout = sys.stdout 
 
     import argparse
 
@@ -561,7 +555,7 @@ if __name__ == "__main__":
     parse.add_argument("--batch_size", type=int, default=128)
     parse.add_argument("--use_server", type=int, default=0)
     parse.add_argument("--re_stdout", type=int, default=0)
-    #  重定向输出
+
     args = parse.parse_args()
     if args.re_stdout == 0:
         re_stdout = False
