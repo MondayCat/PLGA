@@ -1,6 +1,6 @@
 """
 rewrite base class
-time:20200929
+time:
 """
 
 import os
@@ -124,7 +124,7 @@ class ExperimentPara:
 
 class ExperimentParaUpdate(ExperimentPara):
     """
-    用于私有化联邦学习的本地更新N步
+    
     """
     def __init__(self,
                  mode="IID",
@@ -177,7 +177,7 @@ class ExperimentParaUpdate(ExperimentPara):
 
 class ExperimentParaCompressWithPersonal(ExperimentPara):
     """
-    用于私有化联邦学习的本地更新N步
+   
     """
     def __init__(self,
                  mode="IID",
@@ -246,7 +246,7 @@ class ExperimentParaCompressWithPersonal(ExperimentPara):
 
 class ExperimentParaCompressWithPersonalAblation(ExperimentParaCompressWithPersonal):
     """
-    用于私有化联邦学习的本地更新N步
+    
     """
     def __init__(self,
                  mode="IID",
@@ -315,8 +315,6 @@ class ExperimentParaCompressWithPersonalAblation(ExperimentParaCompressWithPerso
 
 class ExperimentParaCompressWithPersonalAddQuan(ExperimentParaCompressWithPersonal):
     """
-    用于私有化联邦学习的本地更新N步
-    添加了量化部分的参数
     """
 
     def __init__(self,
